@@ -1,3 +1,101 @@
-import {useEffect,useState} from 'react';import type{Route}from'./components/ui';import{Icon}from'./components/ui';import{Home}from'./pages/Home';import{Assessment,Results}from'./pages/Assessment';import{Catalogue,Product}from'./pages/Protection';import{Guide}from'./pages/Guides';import{Support,Legal,About}from'./pages/Company';
-const nav:{label:string;href:Route}[]=[{label:'How it works',href:'/assessment'},{label:'Protection',href:'/antivirus'},{label:'Android',href:'/guides/android'},{label:'iPhone',href:'/guides/iphone'}];
-export default function App(){const[path,setPath]=useState<Route>((location.pathname as Route)||'/');const[menu,setMenu]=useState(false);const[platform,setPlatform]=useState<'Android'|'iPhone'|''>('');const[done,setDone]=useState(false);const[busy,setBusy]=useState(false);useEffect(()=>{const pop=()=>{setPath((location.pathname as Route)||'/');setMenu(false)};addEventListener('popstate',pop);return()=>removeEventListener('popstate',pop)},[]);const go=(p:Route)=>{history.pushState({},'',p);setPath(p);setMenu(false);scrollTo({top:0,behavior:'smooth'})};const link=(p:Route,t:string,c='')=><a className={c} href={p} onClick={e=>{e.preventDefault();go(p)}}>{t}</a>;const scan=()=>{if(!platform)return;setBusy(true);setTimeout(()=>{setBusy(false);setDone(true);go('/results')},1100)};return <div className="app-shell"><div className="topline"><span><i className="status-dot"/> Your digital safety, in focus</span><span className="topline-right">Independent guidance <b className="top-sep">/</b> Built for mobile <b className="top-sep">/</b> Always in your corner</span></div><header className="site-header"><button className="brand" onClick={()=>go('/')} aria-label="SENTRIQ home"><span className="brand-mark"><Icon name="shield" size={21}/></span><span>SENTRIQ<span className="brand-period">.</span></span></button><nav className={`main-nav ${menu?'nav-open':''}`} aria-label="Main navigation">{nav.map(n=><a key={n.href} href={n.href} onClick={e=>{e.preventDefault();go(n.href)}}>{n.label}</a>)}</nav><div className="header-actions">{link('/support','Support','support-link')}<button className="button button-small button-primary" onClick={()=>go('/assessment')}>Check my device <Icon name="arrow" size={16}/></button></div><button className="menu-toggle" onClick={()=>setMenu(!menu)} aria-expanded={menu} aria-label="Toggle menu"><Icon name={menu?'close':'menu'}/></button></header><main>{path==='/'&&<Home go={go}/ >}{path==='/assessment'&&<Assessment platform={platform} setPlatform={setPlatform} start={scan} busy={busy}/ >}{path==='/results'&&<Results done={done} go={go}/ >}{path==='/antivirus'&&<Catalogue go={go}/ >}{path==='/product/guard'&&<Product go={go}/ >}{path==='/guides/android'&&<Guide type="Android" go={go}/ >}{path==='/guides/iphone'&&<Guide type="iPhone" go={go}/ >}{path==='/support'&&<Support/>}{path==='/privacy'&&<Legal/>}{path==='/about'&&<About/>}{!['/','/assessment','/results','/antivirus','/product/guard','/guides/android','/guides/iphone','/support','/privacy','/about'].includes(path)&&<Home go={go}/>}</main><footer className="site-footer"><div className="footer-main"><div className="footer-brand"><button className="brand" onClick={()=>go('/')}><span className="brand-mark"><Icon name="shield" size={21}/></span><span>SENTRIQ<span className="brand-period">.</span></span></button><p>Clear thinking for a safer<br/>digital life.</p><span className="footer-note"><Icon name="lock" size={14}/> Your privacy comes first</span></div><div className="footer-col"><h4>Explore</h4>{link('/assessment','Device check')}{link('/antivirus','Protection')}{link('/about','About SENTRIQ')}</div><div className="footer-col"><h4>Guides</h4>{link('/guides/android','Android security')}{link('/guides/iphone','iPhone security')}{link('/support','Get support')}</div><div className="footer-col"><h4>Company</h4>{link('/privacy','Privacy policy')}{link('/support','Contact us')}</div></div><div className="footer-bottom"><span>© 2026 SENTRIQ. Thoughtful protection for everyday life.</span><span>Independent education. Human-first security.</span></div></footer></div>}
+import { useEffect, useState } from 'react';
+import type { Route } from './components/ui';
+import { Icon } from './components/ui';
+import { Home } from './pages/Home';
+import { Assessment, Results } from './pages/Assessment';
+import { Catalogue, Product } from './pages/Protection';
+import { Guide } from './pages/Guides';
+import { About, Legal, LegalDoc, Support } from './pages/Company';
+
+type NavigationItem = { label: string; href: Route | '#services' | '#products'; section?: string };
+const navigation: NavigationItem[] = [
+  { label: 'Home', href: '/' }, { label: 'Security Scan', href: '/assessment' },
+  { label: 'Protection', href: '#services', section: 'services' }, { label: 'Products', href: '#products', section: 'products' },
+  { label: 'Support', href: '/support' },
+];
+
+export default function App() {
+  const [path, setPath] = useState<Route>((window.location.pathname as Route) || '/');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [platform, setPlatform] = useState<'Android' | 'iPhone' | ''>('');
+  const [assessmentComplete, setAssessmentComplete] = useState(false);
+  const [scanning, setScanning] = useState(false);
+
+  useEffect(() => {
+    const handlePopState = () => { setPath((window.location.pathname as Route) || '/'); setMenuOpen(false); };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const go = (destination: Route) => {
+    window.history.pushState({}, '', destination);
+    setPath(destination);
+    setMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const scrollTo = (id: string) => {
+    setMenuOpen(false);
+    if (window.location.pathname !== '/') {
+      window.history.pushState({}, '', '/');
+      setPath('/');
+      window.setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 50);
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const localLink = (destination: Route, label: string) => (
+    <a href={destination} onClick={(event) => { event.preventDefault(); go(destination); }}>{label}</a>
+  );
+
+  const startAssessment = () => {
+    if (!platform) return;
+    setScanning(true);
+    window.setTimeout(() => {
+      const timestamp = new Date().toISOString();
+      try { window.localStorage.setItem('sentriq-last-assessment', timestamp); } catch { /* Keep the assessment usable if storage is disabled. */ }
+      setScanning(false);
+      setAssessmentComplete(true);
+      go('/results');
+    }, 900);
+  };
+
+  return <div className="app-shell">
+    <div className="topline"><span><i className="status-dot"/> Mobile Security &amp; Digital Protection</span><span className="topline-right">Independent guidance <b className="top-sep">/</b> Privacy first <b className="top-sep">/</b> Made for mobile</span></div>
+    <header className="site-header">
+      <a className="brand" href="/" onClick={event => { event.preventDefault(); go('/'); }} aria-label="SENTRIQ home"><span className="brand-mark"><Icon name="shield" size={21}/></span><span>SENTRIQ<span className="brand-period">.</span></span></a>
+      <nav className={`main-nav ${menuOpen ? 'nav-open' : ''}`} aria-label="Main navigation">
+        {navigation.map(item => <a key={item.label} href={item.href} aria-current={!item.section && path === item.href ? 'page' : undefined} onClick={event => { event.preventDefault(); item.section ? scrollTo(item.section) : go(item.href as Route); }}>{item.label}</a>)}
+      </nav>
+      <div className="header-actions"><button className="button button-small button-primary" onClick={() => go('/assessment')}>Check my device <Icon name="arrow" size={16}/></button></div>
+      <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}><Icon name={menuOpen ? 'close' : 'menu'}/></button>
+    </header>
+
+    <main>
+      {path === '/' && <Home go={go} scrollTo={scrollTo}/>}
+      {path === '/assessment' && <Assessment platform={platform} setPlatform={setPlatform} start={startAssessment} busy={scanning}/>}
+      {path === '/results' && <Results done={assessmentComplete} go={go}/>}
+      {path === '/antivirus' && <Catalogue go={go}/>}
+      {path === '/product/guard' && <Product go={go}/>}
+      {path === '/guides/android' && <Guide type="Android" go={go}/>}
+      {path === '/guides/iphone' && <Guide type="iPhone" go={go}/>}
+      {path === '/support' && <Support/>}
+      {path === '/privacy' && <Legal/>}
+      {path === '/terms' && <LegalDoc kind="Terms"/>}
+      {path === '/disclaimer' && <LegalDoc kind="Disclaimer"/>}
+      {path === '/about' && <About/>}
+      {!['/', '/assessment', '/results', '/antivirus', '/product/guard', '/guides/android', '/guides/iphone', '/support', '/privacy', '/about', '/terms', '/disclaimer'].includes(path) && <Home go={go} scrollTo={scrollTo}/>}
+    </main>
+
+    <footer className="site-footer sq-footer">
+      <div className="footer-main">
+        <div className="footer-brand"><a className="brand" href="/" onClick={event => { event.preventDefault(); go('/'); }}><span className="brand-mark"><Icon name="shield" size={21}/></span><span>SENTRIQ<span className="brand-period">.</span></span></a><p>Clear guidance for a<br/>safer digital life.</p><span className="footer-note"><Icon name="lock" size={14}/> Privacy comes first</span></div>
+        <div className="footer-col"><h4>Explore</h4>{localLink('/about','About SENTRIQ')}{localLink('/assessment','Security scan')}{localLink('/support','Contact support')}</div>
+        <div className="footer-col"><h4>Information</h4>{localLink('/privacy','Privacy policy')}{localLink('/terms','Terms of use')}{localLink('/disclaimer','Disclaimer')}</div>
+        <div className="footer-col"><h4>Product directory</h4>{localLink('/antivirus','All providers')}<a href="https://www.bitdefender.com/en-us/consumer/mobile-security-android" target="_blank" rel="noopener noreferrer">Bitdefender</a><a href="https://www.malwarebytes.com/mobile" target="_blank" rel="noopener noreferrer">Malwarebytes</a><a href="https://us.norton.com/products/norton-360-for-mobile" target="_blank" rel="noopener noreferrer">Norton 360</a><a href="https://www.avast.com/en-us/avast-one" target="_blank" rel="noopener noreferrer">Avast One</a></div>
+      </div>
+      <div className="footer-bottom"><span>© 2026 SENTRIQ. Independent mobile security guidance.</span><span>We are not affiliated with any provider listed.</span></div>
+    </footer>
+  </div>;
+}
