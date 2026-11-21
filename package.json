@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "node server/index.mjs",
+    "hash-admin-password": "node server/hash-password.mjs"
   },
   "dependencies": {
     "react": "^19.1.0",

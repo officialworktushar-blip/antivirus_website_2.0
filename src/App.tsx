@@ -8,6 +8,7 @@ import { Guide } from './pages/Guides';
 import { About, Legal, LegalDoc, Support } from './pages/Company';
 import { SecurityScan } from './pages/SecurityScan';
 import { ProductDetail, Products } from './pages/Products';
+import { Admin } from './pages/Admin';
 import { findProduct } from './data/products';
 
 type NavigationItem = { label: string; href: Route | '#services' | '#products'; section?: string };
@@ -89,11 +90,12 @@ export default function App() {
       {path === '/support' && (
         <Support go={go}/>
       )}
+      {path === '/admin' && <Admin/>}
       {path === '/privacy' && <Legal/>}
       {path === '/terms' && <LegalDoc kind="Terms"/>}
       {path === '/disclaimer' && <LegalDoc kind="Disclaimer"/>}
       {path === '/about' && <About/>}
-      {!['/', '/assessment', '/results', '/security-scan', '/antivirus', '/products', '/product/guard', '/guides/android', '/guides/iphone', '/support', '/privacy', '/about', '/terms', '/disclaimer'].includes(path) && !path.startsWith('/products/') && <Home go={go}/>}
+      {!['/', '/assessment', '/results', '/security-scan', '/antivirus', '/products', '/product/guard', '/guides/android', '/guides/iphone', '/support', '/admin', '/privacy', '/about', '/terms', '/disclaimer'].includes(path) && !path.startsWith('/products/') && <Home go={go}/>}
     </main>
 
     <footer className="site-footer sq-footer">
