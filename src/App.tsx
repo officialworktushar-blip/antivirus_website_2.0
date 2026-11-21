@@ -86,7 +86,9 @@ export default function App() {
       {path === '/product/guard' && <Product go={go}/>}
       {path === '/guides/android' && <Guide type="Android" go={go}/>}
       {path === '/guides/iphone' && <Guide type="iPhone" go={go}/>}
-      {path === '/support' && <Support/>}
+      {path === '/support' && (
+        <Support go={go}/>
+      )}
       {path === '/privacy' && <Legal/>}
       {path === '/terms' && <LegalDoc kind="Terms"/>}
       {path === '/disclaimer' && <LegalDoc kind="Disclaimer"/>}
