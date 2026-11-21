@@ -6,10 +6,10 @@ type CheckState = { secureContext: boolean; https: boolean; lastAssessment: stri
 type Service = { icon: IconName; number: string; title: string; description: string; action: string; target: Route };
 
 const services: Service[] = [
-  { icon: 'shield', number: '01', title: 'Malware Protection', description: 'Learn how mobile security apps can help spot harmful downloads and what their scans can—and cannot—see.', action: 'Compare protection', target: '/antivirus' },
+  { icon: 'shield', number: '01', title: 'Malware Protection', description: 'Learn how mobile security apps can help spot harmful downloads and what their scans can—and cannot—see.', action: 'Compare protection', target: '/products' },
   { icon: 'activity', number: '02', title: 'Phishing Protection', description: 'Get practical ways to check suspicious links, messages, and unexpected requests before you respond.', action: 'Read security guides', target: '/guides/android' },
   { icon: 'globe', number: '03', title: 'Browser Security', description: 'Understand safer browsing settings, warning signs, and the limits of browser-based checks.', action: 'Check my device', target: '/security-scan' },
-  { icon: 'lock', number: '04', title: 'Wi-Fi Security', description: 'Make more informed choices on public networks and learn when a reputable VPN may be useful.', action: 'Explore protection', target: '/antivirus' },
+  { icon: 'lock', number: '04', title: 'Wi-Fi Security', description: 'Make more informed choices on public networks and learn when a reputable VPN may be useful.', action: 'Explore protection', target: '/products' },
   { icon: 'spark', number: '05', title: 'Privacy Protection', description: 'Review app permissions, location access, account settings, and the data you choose to share.', action: 'Read privacy guidance', target: '/privacy' },
   { icon: 'scan', number: '06', title: 'Device Security Assessment', description: 'Work through a short, private checklist and get clear next steps for your mobile device.', action: 'Start assessment', target: '/security-scan' },
   { icon: 'phone', number: '07', title: 'Mobile Technical Support', description: 'Get help finding the right guide or preparing the details a trusted technician may need.', action: 'Get support', target: '/support' },
@@ -23,7 +23,7 @@ const vendors = [
   { name: 'Avast', product: 'Avast One', note: 'Android & iOS', url: 'https://www.avast.com/en-us/avast-one' },
 ];
 
-export function Home({ go, scrollTo }: { go: (path: Route) => void; scrollTo: (id: string) => void }) {
+export function Home({ go }: { go: (path: Route) => void }) {
   const [checks, setChecks] = useState<CheckState>({ secureContext: false, https: false, lastAssessment: null });
   const supportPhone = import.meta.env.VITE_SUPPORT_PHONE?.trim() ?? '';
 
@@ -52,7 +52,7 @@ export function Home({ go, scrollTo }: { go: (path: Route) => void; scrollTo: (i
           <p>Understand your device security, discover trusted protection tools and get expert technical assistance.</p>
           <div className="sq-hero-actions">
             <button className="sq-button sq-button-primary" onClick={() => go('/security-scan')}>Check My Device <Icon name="arrow" size={18}/></button>
-            <button className="sq-button sq-button-quiet" onClick={() => scrollTo('products')}>Explore Protection <Icon name="chevron" size={17}/></button>
+            <button className="sq-button sq-button-quiet" onClick={() => go('/products')}>Explore Protection <Icon name="chevron" size={17}/></button>
           </div>
           <div className="sq-hero-assurances"><span><Icon name="lock" size={15}/>Private by design</span><span><Icon name="check" size={15}/>No download required</span></div>
         </div>

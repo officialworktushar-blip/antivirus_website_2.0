@@ -7,11 +7,13 @@ import { Catalogue, Product } from './pages/Protection';
 import { Guide } from './pages/Guides';
 import { About, Legal, LegalDoc, Support } from './pages/Company';
 import { SecurityScan } from './pages/SecurityScan';
+import { ProductDetail, Products } from './pages/Products';
+import { findProduct } from './data/products';
 
 type NavigationItem = { label: string; href: Route | '#services' | '#products'; section?: string };
 const navigation: NavigationItem[] = [
   { label: 'Home', href: '/' }, { label: 'Security Scan', href: '/security-scan' },
-  { label: 'Protection', href: '#services', section: 'services' }, { label: 'Products', href: '#products', section: 'products' },
+  { label: 'Protection', href: '#services', section: 'services' }, { label: 'Products', href: '/products' },
   { label: 'Support', href: '/support' },
 ];
 
@@ -74,10 +76,12 @@ export default function App() {
     </header>
 
     <main>
-      {path === '/' && <Home go={go} scrollTo={scrollTo}/>}
+      {path === '/' && <Home go={go}/>}
       {path === '/assessment' && <Assessment platform={platform} setPlatform={setPlatform} start={startAssessment} busy={scanning}/>}
       {path === '/results' && <Results done={assessmentComplete} go={go}/>}
       {path === '/security-scan' && <SecurityScan go={go}/>}
+      {path === '/products' && <Products go={go}/>}
+      {path.startsWith('/products/') && (() => { const product = findProduct(path.replace('/products/', '')); return product ? <ProductDetail product={product} go={go}/> : <Products go={go}/>; })()}
       {path === '/antivirus' && <Catalogue go={go}/>}
       {path === '/product/guard' && <Product go={go}/>}
       {path === '/guides/android' && <Guide type="Android" go={go}/>}
@@ -87,7 +91,7 @@ export default function App() {
       {path === '/terms' && <LegalDoc kind="Terms"/>}
       {path === '/disclaimer' && <LegalDoc kind="Disclaimer"/>}
       {path === '/about' && <About/>}
-      {!['/', '/assessment', '/results', '/security-scan', '/antivirus', '/product/guard', '/guides/android', '/guides/iphone', '/support', '/privacy', '/about', '/terms', '/disclaimer'].includes(path) && <Home go={go} scrollTo={scrollTo}/>}
+      {!['/', '/assessment', '/results', '/security-scan', '/antivirus', '/products', '/product/guard', '/guides/android', '/guides/iphone', '/support', '/privacy', '/about', '/terms', '/disclaimer'].includes(path) && !path.startsWith('/products/') && <Home go={go}/>}
     </main>
 
     <footer className="site-footer sq-footer">
@@ -95,7 +99,7 @@ export default function App() {
         <div className="footer-brand"><a className="brand" href="/" onClick={event => { event.preventDefault(); go('/'); }}><span className="brand-mark"><Icon name="shield" size={21}/></span><span>SENTRIQ<span className="brand-period">.</span></span></a><p>Clear guidance for a<br/>safer digital life.</p><span className="footer-note"><Icon name="lock" size={14}/> Privacy comes first</span></div>
         <div className="footer-col"><h4>Explore</h4>{localLink('/about','About SENTRIQ')}{localLink('/security-scan','Security scan')}{localLink('/support','Contact support')}</div>
         <div className="footer-col"><h4>Information</h4>{localLink('/privacy','Privacy policy')}{localLink('/terms','Terms of use')}{localLink('/disclaimer','Disclaimer')}</div>
-        <div className="footer-col"><h4>Product directory</h4>{localLink('/antivirus','All providers')}<a href="https://www.bitdefender.com/en-us/consumer/mobile-security-android" target="_blank" rel="noopener noreferrer">Bitdefender</a><a href="https://www.malwarebytes.com/mobile" target="_blank" rel="noopener noreferrer">Malwarebytes</a><a href="https://us.norton.com/products/norton-360-for-mobile" target="_blank" rel="noopener noreferrer">Norton 360</a><a href="https://www.avast.com/en-us/avast-one" target="_blank" rel="noopener noreferrer">Avast One</a></div>
+        <div className="footer-col"><h4>Product directory</h4>{localLink('/products','All providers')}<a href="https://www.bitdefender.com/en-us/consumer/mobile-security-android" target="_blank" rel="noopener noreferrer">Bitdefender</a><a href="https://www.malwarebytes.com/mobile" target="_blank" rel="noopener noreferrer">Malwarebytes</a><a href="https://us.norton.com/products/norton-360-for-mobile" target="_blank" rel="noopener noreferrer">Norton 360</a><a href="https://www.avast.com/en-us/avast-one" target="_blank" rel="noopener noreferrer">Avast One</a></div>
       </div>
       <div className="footer-bottom"><span>© 2026 SENTRIQ. Independent mobile security guidance.</span><span>We are not affiliated with any provider listed.</span></div>
     </footer>
