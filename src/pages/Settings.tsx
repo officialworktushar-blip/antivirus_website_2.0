@@ -5,6 +5,7 @@ type SettingItem = { label: string; detail: string; icon: IconName; tone: 'blue'
 
 const settings: SettingItem[] = [
   { label: 'Security checks', detail: 'Run a private browser assessment and review its limits.', icon: 'shield-check', tone: 'green', route: '/security-scan', action: 'Open' },
+  { label: 'Trusted Advisor', detail: 'Review verified findings and explain each result.', icon: 'activity', tone: 'blue', route: '/trusted-advisor', action: 'View' },
   { label: 'Protection tools', detail: 'Browse independent mobile protection options.', icon: 'grid', tone: 'blue', route: '/products', action: 'Browse' },
   { label: 'Privacy policy', detail: 'Read how SENTRIQ handles browser-only information.', icon: 'lock', tone: 'blue', route: '/privacy', action: 'Read' },
   { label: 'Technical support', detail: 'Choose a safe way to ask for help.', icon: 'chat', tone: 'orange', route: '/support', action: 'Contact' },

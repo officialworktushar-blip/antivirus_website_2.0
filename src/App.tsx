@@ -13,6 +13,7 @@ import { findProduct } from './data/products';
 import { knownRoutes } from './navigation';
 import { Settings } from './pages/Settings';
 import { ScanResults } from './pages/ScanResults';
+import { TrustedAdvisor } from './pages/TrustedAdvisor';
 
 export default function App() {
   const [path, setPath] = useState<Route>((window.location.pathname as Route) || '/');
@@ -55,6 +56,7 @@ export default function App() {
       {path === '/' && <Home go={go} />}
       {path === '/assessment' && <Assessment platform={platform} setPlatform={setPlatform} start={startAssessment} busy={scanning} />}
       {path === '/results' && <ScanResults go={go} />}
+      {path === '/trusted-advisor' && <TrustedAdvisor go={go} />}
       {path === '/security-scan' && <SecurityScan go={go} />}
       {path === '/products' && <Products go={go} />}
       {path.startsWith('/products/') && (() => { const product = findProduct(path.replace('/products/', '')); return product ? <ProductDetail product={product} go={go} /> : <Products go={go} />; })()}

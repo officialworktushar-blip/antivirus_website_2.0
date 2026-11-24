@@ -91,6 +91,7 @@ export function ScanResults({ go }: { go: (route: Route) => void }) {
         </div>
 
         <div className="result-actions scan-results-actions">
+          <button className="scanner-secondary" onClick={() => go('/trusted-advisor')}><Icon name="activity" size={15} /> Trusted Advisor</button>
           <button className="scanner-secondary" onClick={() => go('/security-scan')}><Icon name="refresh" size={15} /> Run scan again</button>
           <button className="scanner-secondary" onClick={() => go('/')}><Icon name="arrow-back" size={15} /> Dashboard</button>
           <button className="scanner-cancel" onClick={clear}>Clear saved result</button>

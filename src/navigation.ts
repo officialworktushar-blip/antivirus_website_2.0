@@ -24,6 +24,7 @@ export const secondaryLinks: { label: string; route: Route; group: 'Discover' | 
   { label: 'iPhone guide', route: '/guides/iphone', group: 'Guidance' },
   { label: 'Device assessment', route: '/assessment', group: 'Guidance' },
   { label: 'Assessment results', route: '/results', group: 'Guidance' },
+  { label: 'Trusted Advisor', route: '/trusted-advisor', group: 'Guidance' },
   { label: 'Support', route: '/support', group: 'Account' },
   { label: 'About SENTRIQ', route: '/about', group: 'Account' },
   { label: 'Privacy', route: '/privacy', group: 'Account' },
@@ -33,7 +34,7 @@ export const secondaryLinks: { label: string; route: Route; group: 'Discover' | 
 ];
 
 export const knownRoutes: Route[] = [
-  '/', '/assessment', '/results', '/security-scan', '/antivirus', '/products',
+  '/', '/assessment', '/results', '/security-scan', '/trusted-advisor', '/antivirus', '/products',
   '/product/guard', '/guides/android', '/guides/iphone', '/support', '/settings',
   '/admin', '/privacy', '/about', '/terms', '/disclaimer',
 ];
@@ -43,7 +44,7 @@ export function isPrimaryNavActive(id: PrimaryNavId, path: Route): boolean {
     case 'dashboard':
       return path === '/';
     case 'security':
-      return path === '/security-scan' || path === '/assessment' || path === '/results';
+      return path === '/security-scan' || path === '/assessment' || path === '/results' || path === '/trusted-advisor';
     case 'tools':
       return path === '/products' || path.startsWith('/products/') || path === '/antivirus' || path === '/product/guard' || path.startsWith('/guides/');
     case 'settings':
