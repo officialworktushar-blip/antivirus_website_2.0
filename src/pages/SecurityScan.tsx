@@ -18,7 +18,7 @@ type Stage = 'start' | 'platform' | 'scanning' | 'complete';
 
 const sleep = (duration: number) => new Promise<void>(resolve => { window.setTimeout(resolve, duration); });
 
-export function SecurityScan({ go }: { go: (to: Route) => void }) {
+export function SecurityScan({ go, onlyReal = false }: { go: (to: Route) => void; onlyReal?: boolean }) {
   const [stage, setStage] = useState<Stage>('start');
   const [device, setDevice] = useState<Platform | null>(null);
   const [demo, setDemo] = useState(false);
@@ -69,7 +69,7 @@ export function SecurityScan({ go }: { go: (to: Route) => void }) {
 
     let available: ScanFinding[];
     try {
-      available = demo ? demoFindings() : runBrowserChecks();
+      available = demo && !onlyReal ? demoFindings() : runBrowserChecks();
     } catch {
       available = [{
         id: 'error',
@@ -138,14 +138,14 @@ export function SecurityScan({ go }: { go: (to: Route) => void }) {
               step="STEP 1 · START SCAN"
               title="Check Your Device"
               text="Review the security signals available to your browser."
-              aside={<Badge tone="blue">Browser only</Badge>}
+              aside={<Badge tone={onlyReal ? 'green' : 'blue'}>{onlyReal ? 'Live checks only' : 'Browser only'}</Badge>}
             />
             <div className="scanner-limits">
               <div><span className="limit-icon good"><Icon name="check" size={15} /></span><span><b>What it checks</b><small>HTTPS, secure context, browser capabilities, privacy signals, and verifiable configuration.</small></span></div>
               <div><span className="limit-icon bad"><Icon name="close" size={15} /></span><span><b>What it cannot check</b><small>Files, installed apps, photos, messages, calls, operating-system malware, or background processes.</small></span></div>
             </div>
             <div className="scanner-actions">
-              <button className="scanner-secondary" onClick={() => { setDemo(true); setStage('platform'); }}>Preview demonstration</button>
+              {!onlyReal && <button className="scanner-secondary" onClick={() => { setDemo(true); setStage('platform'); }}>Preview demonstration</button>}
               <button className="scanner-primary" onClick={() => setStage('platform')}><Icon name="scan" size={16} /> Start Scan</button>
             </div>
           </article>

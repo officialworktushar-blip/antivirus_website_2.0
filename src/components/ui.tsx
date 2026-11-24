@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-export type Route = '/' | '/assessment' | '/results' | '/security-scan' | '/trusted-advisor' | '/tools' | `/tools/${string}` | '/antivirus' | '/products' | `/products/${string}` | '/product/guard' | '/guides/android' | '/guides/iphone' | '/support' | '/settings' | '/admin' | '/privacy' | '/about' | '/terms' | '/disclaimer';
+export type Route = '/' | '/assessment' | '/results' | '/security-scan' | '/security-scan/real' | '/trusted-advisor' | '/tools' | `/tools/${string}` | '/antivirus' | '/products' | `/products/${string}` | '/product/guard' | '/guides/android' | '/guides/iphone' | '/support' | '/settings' | '/admin' | '/privacy' | '/about' | '/terms' | '/disclaimer';
 
 export type IconName =
   | 'shield' | 'shield-check' | 'scan' | 'phone' | 'lock' | 'arrow' | 'arrow-back' | 'check'

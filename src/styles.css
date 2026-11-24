@@ -1179,6 +1179,64 @@ p { color: var(--muted); }
   .av-detail-card { padding: 12px; }
 }
 
+.spt-page { padding-top: 18px; }
+.spt-inner { width: min(100%, 980px); padding-bottom: 70px; }
+.spt-hero-card { padding: 24px; }
+.spt-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, .65fr); gap: 24px; align-items: start; }
+.spt-hero-copy h2 { margin: 12px 0 8px; font-size: 24px; }
+.spt-hero-copy p { max-width: 540px; margin: 0; font-size: 11px; line-height: 1.75; }
+.spt-hero-icon, .spt-card-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 12px; color: var(--primary); background: var(--bg); }
+.spt-hero-side { padding: 14px; border-radius: 12px; background: var(--surface-soft); }
+.spt-status { display: inline-flex; align-items: center; gap: 6px; color: var(--success); font-size: 9px; font-weight: 800; }
+.spt-hero-side p { margin: 8px 0 0; font-size: 9px; line-height: 1.65; }
+.spt-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.spt-actions > * { min-width: 180px; }
+.spt-config-note { margin: 12px 0 0; color: var(--muted); font-size: 9px; line-height: 1.6; }
+.spt-section-grid { display: grid; grid-template-columns: minmax(260px, .8fr) minmax(0, 1.2fr); gap: 14px; margin-top: 14px; }
+.spt-card { padding: 24px; }
+.spt-card#remote-assistance { scroll-margin-top: 82px; }
+.spt-card h2 { margin: 12px 0 10px; font-size: 18px; }
+.spt-card > p { margin: 0; font-size: 10px; line-height: 1.7; }
+.spt-contact-list { display: grid; gap: 10px; margin-top: 16px; }
+.spt-contact-row { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; padding: 12px 0; border-top: 1px solid var(--border); color: var(--primary); }
+.spt-contact-row b, .spt-contact-row small { display: block; }
+.spt-contact-row b { color: var(--ink); font-size: 10px; }
+.spt-contact-row small { margin-top: 3px; color: var(--muted); font-size: 9px; line-height: 1.5; }
+.spt-steps { display: grid; gap: 12px; margin: 18px 0 0; padding: 0; list-style: none; }
+.spt-step { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; }
+.spt-step > span { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 8px; color: var(--primary); background: var(--bg); font-size: 10px; font-weight: 800; }
+.spt-step b { font-size: 10px; }
+.spt-step p { margin: 3px 0 0; font-size: 9px; line-height: 1.6; }
+.spt-safety { display: flex; gap: 9px; margin-top: 18px; padding: 12px; border-radius: 10px; color: var(--blue-deep); background: var(--bg); font-size: 9px; line-height: 1.6; }
+.spt-safety svg { flex: 0 0 auto; color: var(--primary); }
+.spt-consent { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 10px; margin-top: 16px; color: var(--ink-soft); font-size: 9px; line-height: 1.6; cursor: pointer; }
+.spt-consent input { width: 16px; height: 16px; margin: 0; accent-color: var(--primary); }
+.spt-remote-action { margin-top: 16px; }
+.spt-followup { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 14px; align-items: center; margin-top: 14px; padding: 20px; }
+.spt-followup h2 { margin: 0 0 6px; font-size: 18px; }
+.spt-followup p { margin: 0; font-size: 10px; line-height: 1.65; }
+.spt-faq { margin-top: 30px; }
+.spt-faq > h2 { margin: 0 0 12px; font-size: 20px; }
+.spt-faq details { border: 1px solid var(--border); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow-soft); }
+.spt-faq details + details { margin-top: 8px; }
+.spt-faq summary { padding: 14px 16px; color: var(--ink); font-size: 11px; font-weight: 700; cursor: pointer; }
+.spt-faq details p { margin: 0; padding: 0 16px 14px; font-size: 10px; line-height: 1.7; }
+
+@media (max-width: 900px) {
+  .spt-hero-grid, .spt-section-grid { grid-template-columns: 1fr; }
+  .spt-followup { grid-template-columns: 44px minmax(0, 1fr); }
+  .spt-followup button { grid-column: 1 / -1; }
+}
+
+@media (max-width: 700px) {
+  .spt-page { padding-top: 10px; }
+  .spt-inner { width: 100%; }
+  .spt-hero-card, .spt-card { padding: 18px; border-radius: 16px; }
+  .spt-actions { display: grid; grid-template-columns: 1fr; }
+  .spt-actions > * { width: 100%; }
+  .spt-followup { padding: 16px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }

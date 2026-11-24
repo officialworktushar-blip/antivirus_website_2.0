@@ -5,7 +5,8 @@ import { Home } from './pages/Home';
 import { Assessment } from './pages/Assessment';
 import { Catalogue, Product } from './pages/Protection';
 import { Guide } from './pages/Guides';
-import { About, Legal, LegalDoc, Support } from './pages/Company';
+import { About, Legal, LegalDoc } from './pages/Company';
+import { Support } from './pages/Support';
 import { SecurityScan } from './pages/SecurityScan';
 import { ProductDetail, Products } from './pages/Products';
 import { Admin } from './pages/Admin';
@@ -62,6 +63,7 @@ export default function App() {
       {path === '/tools' && <Tools go={go} />}
       {path.startsWith('/tools/') && (() => { const tool = findTool(path.replace('/tools/', '')); return tool ? <ToolDetail tool={tool} go={go} /> : <Tools go={go} />; })()}
       {path === '/security-scan' && <SecurityScan go={go} />}
+      {path === '/security-scan/real' && <SecurityScan go={go} onlyReal />}
       {path === '/products' && <Products go={go} />}
       {path.startsWith('/products/') && (() => { const product = findProduct(path.replace('/products/', '')); return product ? <ProductDetail product={product} go={go} /> : <Products go={go} />; })()}
       {path === '/antivirus' && <Catalogue go={go} />}
