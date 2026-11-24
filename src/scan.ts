@@ -7,6 +7,7 @@ export type StoredAssessment = { completedAt: string; device: Platform; isDemo: 
 
 export const ASSESSMENT_STORAGE_KEY = 'sentriq-security-assessment';
 export const ASSESSMENT_HISTORY_PREFERENCE_KEY = 'sentriq-assessment-history-enabled';
+export const MAX_DISPLAY_SCORE = 75;
 const LEGACY_ASSESSMENT_STORAGE_KEY = 'sentriq-last-assessment';
 
 export const scanActivities = [
@@ -35,10 +36,19 @@ export function formatAssessmentDate(value: string): string | null {
   return new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(date);
 }
 
-export function scoreFromFindings(findings: ScanFinding[]): number | null {
+export function capDisplayScore(value: number | null): number | null {
+  if (value === null) return null;
+  return Math.min(MAX_DISPLAY_SCORE, Math.max(0, Math.round(value)));
+}
+
+export function rawScoreFromFindings(findings: ScanFinding[]): number | null {
   if (!findings.length) return null;
   const passed = findings.filter(finding => finding.state === 'passed').length;
   return Math.round((passed / findings.length) * 100);
+}
+
+export function scoreFromFindings(findings: ScanFinding[]): number | null {
+  return capDisplayScore(rawScoreFromFindings(findings));
 }
 
 export function readStoredAssessment(): StoredAssessment | null {

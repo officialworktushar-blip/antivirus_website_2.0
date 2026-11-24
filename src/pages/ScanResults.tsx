@@ -4,8 +4,10 @@ import { Badge, Icon } from '../components/ui';
 import { ScanFindingList, ScanNotice, ScanProgressRing } from '../components/Scanner';
 import {
   ASSESSMENT_STORAGE_KEY,
+  MAX_DISPLAY_SCORE,
   clearAssessment,
   formatAssessmentDate,
+  rawScoreFromFindings,
   scoreFromFindings,
   type ScanFinding,
   type ScanState,
@@ -138,6 +140,7 @@ function ResultsContent({ go }: { go: (route: Route) => void }) {
   if (!assessment) return <EmptyState go={go} />;
 
   const score = displayScore(assessment.findings);
+  const rawScore = rawScoreFromFindings(assessment.findings);
   const counts = { passed: 0, attention: 0, unavailable: 0 };
   assessment.findings.forEach((finding) => {
     if (finding.state === 'passed') counts.passed += 1;
@@ -164,6 +167,9 @@ function ResultsContent({ go }: { go: (route: Route) => void }) {
           <Badge tone={assessment.isDemo ? 'orange' : 'green'}>{assessment.isDemo ? 'Demonstration' : 'Complete'}</Badge>
         </div>
 
+        {rawScore !== null && rawScore > MAX_DISPLAY_SCORE && (
+          <ScanNotice tone="warning">Displayed score is capped at {MAX_DISPLAY_SCORE}%. Browser-only checks cannot inspect files, installed apps, or system-level threats; genuine unavailable checks are listed below.</ScanNotice>
+        )}
         {assessment.partial && (
           <ScanNotice tone="warning">Some saved details were incomplete and were omitted. The findings below are the valid saved results.</ScanNotice>
         )}
@@ -173,11 +179,17 @@ function ResultsContent({ go }: { go: (route: Route) => void }) {
 
         <div className="scan-results-hero">
           <div>
-            <span className="scan-ui-step">{assessment.isDemo ? 'SAMPLE SCORE' : 'PROTECTION SCORE'}</span>
-            <h2>{assessment.isDemo ? 'How a report looks' : score === null ? 'No score available' : score === 100 ? 'All visible checks passed' : 'Review the details below'}</h2>
-            <p>Selected platform: {assessment.device} · {date ?? 'Completed recently'}</p>
+            <span className="scan-ui-step">{assessment.isDemo ? 'SAMPLE SCORE' : 'SCAN COMPLETE · PROTECTION SCORE'}</span>
+            <h2>{assessment.isDemo
+              ? 'How a report looks'
+              : score === null
+                ? 'Scan complete'
+                : rawScore === 100
+                  ? 'Scan complete — all visible checks passed'
+                  : 'Scan complete — review the details below'}</h2>
+            <p>Selected platform: {assessment.device} · {counts.passed} of {assessment.findings.length} checks passed · {date ?? 'Completed recently'}</p>
           </div>
-          <ScanProgressRing value={score ?? 0} label={assessment.isDemo ? 'Sample' : 'Passed'} />
+          <ScanProgressRing value={score ?? 0} label={assessment.isDemo ? 'Sample' : 'Complete'} />
         </div>
 
         <div className="scan-results-stats">

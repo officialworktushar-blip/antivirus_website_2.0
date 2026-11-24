@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { Route } from '../components/ui';
 import { Icon, type IconName } from '../components/ui';
+import { capDisplayScore } from '../scan';
 
 type FindingState = 'passed' | 'attention' | 'unavailable';
 type StoredFinding = { id: string; label: string; state: FindingState; detail: string };
@@ -70,7 +71,7 @@ export function Home({ go }: { go: (path: Route) => void }) {
     const passed = findings.filter(finding => finding.state === 'passed').length;
     const attention = findings.filter(finding => finding.state === 'attention').length;
     const unavailable = findings.filter(finding => finding.state === 'unavailable').length;
-    const score = findings.length ? Math.round((passed / findings.length) * 100) : null;
+    const score = capDisplayScore(findings.length ? Math.round((passed / findings.length) * 100) : null);
     const status = !assessment
       ? 'Not yet assessed'
       : attention > 0

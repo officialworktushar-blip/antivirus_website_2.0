@@ -1,4 +1,4 @@
-import type { ScanFinding, ScanState, StoredAssessment } from './scan';
+import { capDisplayScore, type ScanFinding, type ScanState, type StoredAssessment } from './scan';
 
 export type AdvisorTone = 'red' | 'orange' | 'green' | 'neutral';
 export type AdvisorGroupId = 'critical' | 'minor' | 'completed';
@@ -225,13 +225,14 @@ export function deriveAdvisorReport(assessment: StoredAssessment | null): Adviso
     };
   }
 
-  const score = Math.round((earnedWeight / possibleWeight) * 100);
+  const rawScore = Math.round((earnedWeight / possibleWeight) * 100);
+  const score = capDisplayScore(rawScore);
   const status = critical.length > 0
     ? 'Attention required'
-    : score >= 80
+    : rawScore >= 80
       ? 'Protection looks good'
       : 'Review recommended';
-  const tone: AdvisorTone = critical.length > 0 ? 'red' : score >= 80 ? 'green' : 'orange';
+  const tone: AdvisorTone = critical.length > 0 ? 'red' : rawScore >= 80 ? 'green' : 'orange';
 
   return {
     complete: true,
