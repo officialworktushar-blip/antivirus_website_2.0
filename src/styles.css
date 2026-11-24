@@ -832,6 +832,70 @@ p { color: var(--muted); }
 .tool-action-primary { border: 1px solid var(--primary); background: var(--primary); color: #FFFFFF; }
 .tool-action-secondary { border: 1px solid var(--primary); background: var(--surface); color: var(--primary); }
 
+.av-products-page { padding: 20px 0 28px; }
+.av-products-inner { width: min(720px, 100%); margin: 0 auto; }
+.av-products-heading h1 { margin: 6px 0 6px; font-size: 23px; line-height: 1.2; }
+.av-products-heading p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.6; }
+.av-eyebrow { color: var(--primary); font-size: 9px; font-weight: 800; letter-spacing: .12em; }
+.av-label { display: block; margin-bottom: 6px; color: var(--primary); font-size: 8px; font-weight: 800; letter-spacing: .1em; }
+.av-trust-section { display: grid; grid-template-columns: 38px minmax(0, 1fr); gap: 11px; margin: 14px 0; padding: 14px; border: 1px solid #D7E3FF; border-radius: 16px; background: var(--bg); }
+.av-section-icon { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 11px; color: var(--primary); background: #FFFFFF; }
+.av-trust-section h2 { margin: 0; font-size: 13px; }
+.av-trust-section p { margin: 5px 0 0; color: var(--text); font-size: 10px; line-height: 1.6; }
+.av-trust-section small { display: block; margin-top: 7px; color: var(--muted); font-size: 9px; line-height: 1.5; }
+.av-product-list { display: grid; gap: 12px; }
+.av-product-card { padding: 15px; border: 1px solid var(--border); border-radius: 18px; background: #FFFFFF; box-shadow: var(--shadow-soft); }
+.av-product-card-head { display: grid; grid-template-columns: 46px minmax(0, 1fr); align-items: center; gap: 11px; }
+.av-product-brand { color: var(--primary); font-size: 8px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.av-product-card h2 { margin: 3px 0 0; font-size: 13px; }
+.av-logo { position: relative; width: 46px; height: 46px; display: grid; place-items: center; border-radius: 12px; background: var(--bg); overflow: hidden; }
+.av-logo-large { width: 56px; height: 56px; border-radius: 14px; }
+.av-logo-fallback { color: var(--primary); font-family: 'Manrope', sans-serif; font-size: 18px; font-weight: 800; }
+.av-logo-large .av-logo-fallback { font-size: 22px; }
+.av-logo img { position: absolute; inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); border-radius: 6px; background: #FFFFFF; object-fit: contain; }
+.av-product-block { margin-top: 13px; padding-top: 12px; border-top: 1px solid var(--border); }
+.av-product-block p { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.6; }
+.av-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.av-chips span { display: inline-flex; align-items: center; gap: 4px; padding: 5px 8px; border-radius: 999px; color: var(--primary); background: var(--bg); font-size: 9px; font-weight: 800; }
+.av-capability-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.av-capability-list span { display: inline-flex; align-items: center; gap: 4px; padding: 5px 8px; border: 1px solid var(--border); border-radius: 999px; font-size: 9px; font-weight: 700; }
+.av-capability-list svg { color: var(--success); }
+.av-product-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+.av-product-actions button, .av-product-actions a { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; border-radius: 999px; font-size: 10px; font-weight: 800; text-align: center; }
+.av-product-actions button { border: 1px solid var(--primary); background: var(--primary); color: #FFFFFF; }
+.av-product-actions a { border: 1px solid var(--primary); background: #FFFFFF; color: var(--primary); }
+.av-help-section { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; padding: 15px; border: 1px solid var(--border); border-radius: 18px; background: var(--bg); }
+.av-help-section h2 { margin: 5px 0 4px; font-size: 14px; }
+.av-help-section p { margin: 0; max-width: 430px; color: var(--muted); font-size: 9px; line-height: 1.55; }
+.av-help-section button { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 0 14px; border: 0; border-radius: 999px; background: var(--primary); color: #FFFFFF; font-size: 10px; font-weight: 800; white-space: nowrap; }
+.av-back { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 12px; padding: 0; border: 0; background: transparent; color: var(--primary); font-size: 10px; font-weight: 800; }
+.av-detail-card { padding: 16px; border: 1px solid var(--border); border-radius: 18px; background: #FFFFFF; box-shadow: var(--shadow-soft); }
+.av-detail-head { display: grid; grid-template-columns: 56px minmax(0, 1fr); align-items: start; gap: 12px; }
+.av-detail-head h1 { margin: 5px 0 6px; font-size: 19px; line-height: 1.2; }
+.av-detail-head p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.6; }
+.av-detail-chips { margin-top: 14px; }
+.av-detail-section { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
+.av-detail-section h2 { margin: 0 0 10px; font-size: 12px; }
+.av-detail-section > p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.6; }
+.av-feature-list { display: grid; gap: 8px; }
+.av-feature-list article { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; padding: 10px; border-radius: 12px; background: var(--surface-soft); }
+.av-feature-icon { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; color: var(--primary); background: var(--bg); }
+.av-feature-list b, .av-compatibility-grid b { display: block; font-size: 10px; }
+.av-feature-list p, .av-compatibility-grid p { margin: 3px 0 0; color: var(--muted); font-size: 9px; line-height: 1.55; }
+.av-compatibility-grid { display: grid; gap: 8px; }
+.av-compatibility-grid article { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 9px; padding: 10px; border: 1px solid var(--border); border-radius: 12px; }
+.av-compat-icon { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 9px; color: var(--primary); background: var(--bg); }
+.av-install-steps { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.av-install-steps li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 9px; align-items: start; }
+.av-install-steps span { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 9px; color: var(--primary); background: var(--bg); font-size: 9px; font-weight: 800; }
+.av-install-steps p { margin: 4px 0 0; color: var(--muted); font-size: 9px; line-height: 1.55; }
+.av-official-links { display: grid; gap: 7px; }
+.av-official-links a { min-height: 40px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border: 1px solid var(--border); border-radius: 12px; color: var(--primary); background: var(--surface-soft); font-size: 10px; font-weight: 800; }
+.av-official-links a svg:last-child { margin-left: auto; }
+.av-source-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.av-source-list a { display: inline-flex; align-items: center; gap: 5px; padding: 6px 9px; border-radius: 999px; color: var(--primary); background: var(--bg); font-size: 9px; font-weight: 700; }
+.av-detail-section > .av-source-note { margin: 9px 0 0; }
+
 @keyframes scan-ui-orbit { to { transform: rotate(360deg); } }
 @keyframes scan-ui-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
 
@@ -1091,6 +1155,28 @@ p { color: var(--muted); }
   .tools-grid { gap: 8px; }
   .tool-card { min-height: 140px; padding: 12px; }
   .tool-detail-card { padding: 12px; }
+}
+
+@media (max-width: 700px) {
+  .av-help-section { align-items: stretch; flex-direction: column; }
+  .av-help-section button { width: 100%; }
+}
+
+@media (max-width: 430px) {
+  .av-products-inner { width: 100%; }
+  .av-products-heading h1 { font-size: 20px; }
+  .av-product-card { padding: 13px; border-radius: 16px; }
+  .av-product-actions { grid-template-columns: 1fr; }
+  .av-detail-card { padding: 13px; border-radius: 16px; }
+  .av-detail-head { grid-template-columns: 46px minmax(0, 1fr); }
+  .av-logo-large { width: 46px; height: 46px; }
+  .av-detail-head h1 { font-size: 17px; }
+}
+
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
+  .av-products-page { padding-top: 10px; }
+  .av-product-card { padding: 12px; }
+  .av-detail-card { padding: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
