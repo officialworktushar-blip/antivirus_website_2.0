@@ -14,6 +14,8 @@ import { knownRoutes } from './navigation';
 import { Settings } from './pages/Settings';
 import { ScanResults } from './pages/ScanResults';
 import { TrustedAdvisor } from './pages/TrustedAdvisor';
+import { Tools, ToolDetail } from './pages/Tools';
+import { findTool } from './data/tools';
 
 export default function App() {
   const [path, setPath] = useState<Route>((window.location.pathname as Route) || '/');
@@ -49,7 +51,7 @@ export default function App() {
     }, 900);
   };
 
-  const isKnown = knownRoutes.includes(path) || path.startsWith('/products/');
+  const isKnown = knownRoutes.includes(path) || path.startsWith('/products/') || path.startsWith('/tools/');
 
   return (
     <AppShell path={path} go={go}>
@@ -57,6 +59,8 @@ export default function App() {
       {path === '/assessment' && <Assessment platform={platform} setPlatform={setPlatform} start={startAssessment} busy={scanning} />}
       {path === '/results' && <ScanResults go={go} />}
       {path === '/trusted-advisor' && <TrustedAdvisor go={go} />}
+      {path === '/tools' && <Tools go={go} />}
+      {path.startsWith('/tools/') && (() => { const tool = findTool(path.replace('/tools/', '')); return tool ? <ToolDetail tool={tool} go={go} /> : <Tools go={go} />; })()}
       {path === '/security-scan' && <SecurityScan go={go} />}
       {path === '/products' && <Products go={go} />}
       {path.startsWith('/products/') && (() => { const product = findProduct(path.replace('/products/', '')); return product ? <ProductDetail product={product} go={go} /> : <Products go={go} />; })()}
