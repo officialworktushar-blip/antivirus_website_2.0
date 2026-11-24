@@ -5,7 +5,7 @@ import { Home } from './pages/Home';
 import { Assessment } from './pages/Assessment';
 import { Catalogue, Product } from './pages/Protection';
 import { Guide } from './pages/Guides';
-import { About, Legal, LegalDoc } from './pages/Company';
+import { About, Disclaimer, Help, Privacy, Terms } from './pages/Company';
 import { Support } from './pages/Support';
 import { SecurityScan } from './pages/SecurityScan';
 import { ProductDetail, Products } from './pages/Products';
@@ -17,6 +17,7 @@ import { ScanResults } from './pages/ScanResults';
 import { TrustedAdvisor } from './pages/TrustedAdvisor';
 import { Tools, ToolDetail } from './pages/Tools';
 import { findTool } from './data/tools';
+import { isAssessmentHistoryEnabled } from './scan';
 
 export default function App() {
   const [path, setPath] = useState<Route>((window.location.pathname as Route) || '/');
@@ -41,7 +42,7 @@ export default function App() {
     window.setTimeout(() => {
       const timestamp = new Date().toISOString();
       try {
-        window.localStorage.setItem('sentriq-last-assessment', timestamp);
+        if (isAssessmentHistoryEnabled()) window.localStorage.setItem('sentriq-last-assessment', timestamp);
       } catch {
         setScanning(false);
         go('/results');
@@ -73,10 +74,11 @@ export default function App() {
       {path === '/support' && <Support go={go} />}
       {path === '/settings' && <Settings go={go} />}
       {path === '/admin' && <Admin />}
-      {path === '/privacy' && <Legal />}
-      {path === '/terms' && <LegalDoc kind="Terms" />}
-      {path === '/disclaimer' && <LegalDoc kind="Disclaimer" />}
-      {path === '/about' && <About />}
+      {path === '/privacy' && <Privacy go={go} />}
+      {path === '/terms' && <Terms go={go} />}
+      {path === '/disclaimer' && <Disclaimer go={go} />}
+      {path === '/help' && <Help go={go} />}
+      {path === '/about' && <About go={go} />}
       {!isKnown && <Home go={go} />}
     </AppShell>
   );

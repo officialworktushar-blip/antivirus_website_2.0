@@ -7,6 +7,7 @@ import {
   demoFindings,
   detectPlatformHint,
   formatAssessmentDate,
+  isAssessmentHistoryEnabled,
   runBrowserChecks,
   saveAssessment,
   scanActivities,
@@ -95,9 +96,12 @@ export function SecurityScan({ go, onlyReal = false }: { go: (to: Route) => void
 
     if (runRef.current !== token) return;
     const completedAt = new Date().toISOString();
+    const historyEnabled = isAssessmentHistoryEnabled();
     const saved = saveAssessment({ completedAt, device, isDemo: demo, findings });
     setFinishedAt(completedAt);
-    if (!saved) setSaveWarning('This browser blocked local storage, so the results cannot be restored after leaving the page.');
+    if (!saved) setSaveWarning(historyEnabled
+      ? 'This browser blocked local storage, so the results cannot be restored after leaving the page.'
+      : 'Assessment history is turned off in Settings, so this result was not saved.');
     setStage('complete');
     timerRef.current = window.setTimeout(() => {
       if (runRef.current === token) go('/results');

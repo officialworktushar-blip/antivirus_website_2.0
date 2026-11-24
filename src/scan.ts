@@ -6,6 +6,8 @@ export type ScanFinding = { id: string; label: string; state: ScanState; detail:
 export type StoredAssessment = { completedAt: string; device: Platform; isDemo: boolean; findings: ScanFinding[] };
 
 export const ASSESSMENT_STORAGE_KEY = 'sentriq-security-assessment';
+export const ASSESSMENT_HISTORY_PREFERENCE_KEY = 'sentriq-assessment-history-enabled';
+const LEGACY_ASSESSMENT_STORAGE_KEY = 'sentriq-last-assessment';
 
 export const scanActivities = [
   { id: 'browser-security', title: 'Browser Security', detail: 'Checking browser security APIs and capabilities.', ids: ['browser', 'context'] },
@@ -62,7 +64,25 @@ export function readStoredAssessment(): StoredAssessment | null {
   }
 }
 
+export function isAssessmentHistoryEnabled(): boolean {
+  try {
+    return localStorage.getItem(ASSESSMENT_HISTORY_PREFERENCE_KEY) !== 'false';
+  } catch {
+    return true;
+  }
+}
+
+export function setAssessmentHistoryEnabled(enabled: boolean): boolean {
+  try {
+    localStorage.setItem(ASSESSMENT_HISTORY_PREFERENCE_KEY, enabled ? 'true' : 'false');
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export function saveAssessment(assessment: StoredAssessment): boolean {
+  if (!isAssessmentHistoryEnabled()) return false;
   try {
     localStorage.setItem(ASSESSMENT_STORAGE_KEY, JSON.stringify(assessment));
     return true;
@@ -73,6 +93,15 @@ export function saveAssessment(assessment: StoredAssessment): boolean {
 
 export function clearAssessment(): void {
   try { localStorage.removeItem(ASSESSMENT_STORAGE_KEY); } catch { return; }
+}
+
+export function clearAssessmentHistory(): void {
+  try {
+    localStorage.removeItem(ASSESSMENT_STORAGE_KEY);
+    localStorage.removeItem(LEGACY_ASSESSMENT_STORAGE_KEY);
+  } catch {
+    return;
+  }
 }
 
 export function detectPlatformHint(): { suggested: Platform | null; label: string; detail: string } {
