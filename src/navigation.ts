@@ -18,12 +18,10 @@ export const primaryNavItems: PrimaryNavItem[] = [
 
 export const secondaryLinks: { label: string; route: Route; group: 'Discover' | 'Guidance' | 'Account' }[] = [
   { label: 'Product directory', route: '/products', group: 'Discover' },
-  { label: 'Protection overview', route: '/product/guard', group: 'Discover' },
-  { label: 'Security catalogue', route: '/antivirus', group: 'Discover' },
   { label: 'Security tools', route: '/tools', group: 'Discover' },
   { label: 'Android guide', route: '/guides/android', group: 'Guidance' },
   { label: 'iPhone guide', route: '/guides/iphone', group: 'Guidance' },
-  { label: 'Device assessment', route: '/assessment', group: 'Guidance' },
+  { label: 'Security scan', route: '/security-scan', group: 'Guidance' },
   { label: 'Assessment results', route: '/results', group: 'Guidance' },
   { label: 'Trusted Advisor', route: '/trusted-advisor', group: 'Guidance' },
   { label: 'Support', route: '/support', group: 'Account' },
@@ -36,8 +34,8 @@ export const secondaryLinks: { label: string; route: Route; group: 'Discover' | 
 ];
 
 export const knownRoutes: Route[] = [
-  '/', '/assessment', '/results', '/security-scan', '/security-scan/real', '/trusted-advisor', '/tools', '/antivirus', '/products',
-  '/product/guard', '/guides/android', '/guides/iphone', '/support', '/help', '/settings',
+  '/', '/results', '/security-scan', '/security-scan/real', '/trusted-advisor', '/tools', '/products',
+  '/guides/android', '/guides/iphone', '/support', '/help', '/settings',
   '/admin', '/privacy', '/about', '/terms', '/disclaimer',
 ];
 
@@ -46,9 +44,9 @@ export function isPrimaryNavActive(id: PrimaryNavId, path: Route): boolean {
     case 'dashboard':
       return path === '/';
     case 'security':
-      return path === '/security-scan' || path === '/security-scan/real' || path === '/assessment' || path === '/results' || path === '/trusted-advisor';
+      return path === '/security-scan' || path === '/security-scan/real' || path === '/results' || path === '/trusted-advisor';
     case 'tools':
-      return path === '/tools' || path.startsWith('/tools/') || path === '/products' || path.startsWith('/products/') || path === '/antivirus' || path === '/product/guard' || path.startsWith('/guides/');
+      return path === '/tools' || path.startsWith('/tools/') || path === '/products' || path.startsWith('/products/') || path.startsWith('/guides/');
     case 'settings':
       return path === '/settings' || path === '/support' || path === '/help' || path === '/admin' || path === '/privacy' || path === '/about' || path === '/terms' || path === '/disclaimer';
   }

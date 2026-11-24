@@ -68,6 +68,7 @@ export function SecurityScan({ go, onlyReal = false }: { go: (to: Route) => void
     setSaveWarning(null);
     setFinishedAt(null);
 
+    const collected: ScanFinding[] = [];
     let available: ScanFinding[];
     try {
       available = demo && !onlyReal ? demoFindings() : runBrowserChecks();
@@ -89,15 +90,20 @@ export function SecurityScan({ go, onlyReal = false }: { go: (to: Route) => void
       await sleep(420);
       if (runRef.current !== token) return;
       const group = available.filter(finding => (activity.ids as readonly string[]).includes(finding.id));
-      setFindings(previous => [...previous, ...group]);
+      collected.push(...group);
+      setFindings([...collected]);
       setCompleted(previous => [...previous, activity.title]);
       setProgress(Math.round(((index + 1) / scanActivities.length) * 100));
     }
 
     if (runRef.current !== token) return;
+    if (!collected.length && available.length) {
+      collected.push(...available);
+      setFindings([...collected]);
+    }
     const completedAt = new Date().toISOString();
     const historyEnabled = isAssessmentHistoryEnabled();
-    const saved = saveAssessment({ completedAt, device, isDemo: demo, findings });
+    const saved = saveAssessment({ completedAt, device, isDemo: demo && !onlyReal, findings: collected });
     setFinishedAt(completedAt);
     if (!saved) setSaveWarning(historyEnabled
       ? 'This browser blocked local storage, so the results cannot be restored after leaving the page.'

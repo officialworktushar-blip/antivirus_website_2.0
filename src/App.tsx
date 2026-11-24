@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import type { Route } from './components/ui';
 import { AppShell } from './components/AppShell';
 import { Home } from './pages/Home';
-import { Assessment } from './pages/Assessment';
-import { Catalogue, Product } from './pages/Protection';
 import { Guide } from './pages/Guides';
 import { About, Disclaimer, Help, Privacy, Terms } from './pages/Company';
 import { Support } from './pages/Support';
@@ -17,12 +15,9 @@ import { ScanResults } from './pages/ScanResults';
 import { TrustedAdvisor } from './pages/TrustedAdvisor';
 import { Tools, ToolDetail } from './pages/Tools';
 import { findTool } from './data/tools';
-import { isAssessmentHistoryEnabled } from './scan';
 
 export default function App() {
   const [path, setPath] = useState<Route>((window.location.pathname as Route) || '/');
-  const [platform, setPlatform] = useState<'Android' | 'iPhone' | ''>('');
-  const [scanning, setScanning] = useState(false);
 
   useEffect(() => {
     const handlePopState = () => setPath((window.location.pathname as Route) || '/');
@@ -36,29 +31,11 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const startAssessment = () => {
-    if (!platform) return;
-    setScanning(true);
-    window.setTimeout(() => {
-      const timestamp = new Date().toISOString();
-      try {
-        if (isAssessmentHistoryEnabled()) window.localStorage.setItem('sentriq-last-assessment', timestamp);
-      } catch {
-        setScanning(false);
-        go('/results');
-        return;
-      }
-      setScanning(false);
-      go('/results');
-    }, 900);
-  };
-
   const isKnown = knownRoutes.includes(path) || path.startsWith('/products/') || path.startsWith('/tools/');
 
   return (
     <AppShell path={path} go={go}>
       {path === '/' && <Home go={go} />}
-      {path === '/assessment' && <Assessment platform={platform} setPlatform={setPlatform} start={startAssessment} busy={scanning} />}
       {path === '/results' && <ScanResults go={go} />}
       {path === '/trusted-advisor' && <TrustedAdvisor go={go} />}
       {path === '/tools' && <Tools go={go} />}
@@ -67,8 +44,6 @@ export default function App() {
       {path === '/security-scan/real' && <SecurityScan go={go} onlyReal />}
       {path === '/products' && <Products go={go} />}
       {path.startsWith('/products/') && (() => { const product = findProduct(path.replace('/products/', '')); return product ? <ProductDetail product={product} go={go} /> : <Products go={go} />; })()}
-      {path === '/antivirus' && <Catalogue go={go} />}
-      {path === '/product/guard' && <Product go={go} />}
       {path === '/guides/android' && <Guide type="Android" go={go} />}
       {path === '/guides/iphone' && <Guide type="iPhone" go={go} />}
       {path === '/support' && <Support go={go} />}
