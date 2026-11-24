@@ -10,6 +10,8 @@ import { SecurityScan } from './pages/SecurityScan';
 import { ProductDetail, Products } from './pages/Products';
 import { Admin } from './pages/Admin';
 import { findProduct } from './data/products';
+import { knownRoutes } from './navigation';
+import { Settings } from './pages/Settings';
 
 export default function App() {
   const [path, setPath] = useState<Route>((window.location.pathname as Route) || '/');
@@ -41,7 +43,6 @@ export default function App() {
     }, 900);
   };
 
-  const knownRoutes = ['/', '/assessment', '/results', '/security-scan', '/antivirus', '/products', '/product/guard', '/guides/android', '/guides/iphone', '/support', '/admin', '/privacy', '/about', '/terms', '/disclaimer'];
   const isKnown = knownRoutes.includes(path) || path.startsWith('/products/');
 
   return (
@@ -57,6 +58,7 @@ export default function App() {
       {path === '/guides/android' && <Guide type="Android" go={go} />}
       {path === '/guides/iphone' && <Guide type="iPhone" go={go} />}
       {path === '/support' && <Support go={go} />}
+      {path === '/settings' && <Settings go={go} />}
       {path === '/admin' && <Admin />}
       {path === '/privacy' && <Legal />}
       {path === '/terms' && <LegalDoc kind="Terms" />}

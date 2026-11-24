@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react';
 
-export type Route = '/' | '/assessment' | '/results' | '/security-scan' | '/antivirus' | '/products' | `/products/${string}` | '/product/guard' | '/guides/android' | '/guides/iphone' | '/support' | '/admin' | '/privacy' | '/about' | '/terms' | '/disclaimer';
+export type Route = '/' | '/assessment' | '/results' | '/security-scan' | '/antivirus' | '/products' | `/products/${string}` | '/product/guard' | '/guides/android' | '/guides/iphone' | '/support' | '/settings' | '/admin' | '/privacy' | '/about' | '/terms' | '/disclaimer';
 
 export type IconName =
   | 'shield' | 'shield-check' | 'scan' | 'phone' | 'lock' | 'arrow' | 'arrow-back' | 'check'
   | 'menu' | 'close' | 'spark' | 'chevron' | 'globe' | 'activity' | 'home' | 'alert'
   | 'clock' | 'download' | 'mail' | 'chat' | 'wifi' | 'user' | 'bell' | 'broom'
-  | 'battery' | 'eye' | 'refresh' | 'info' | 'book' | 'plus';
+  | 'battery' | 'eye' | 'refresh' | 'info' | 'book' | 'plus' | 'grid' | 'settings';
 
 const paths: Record<IconName, ReactNode> = {
   shield: <><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z" /></>,
@@ -39,6 +39,8 @@ const paths: Record<IconName, ReactNode> = {
   info: <><circle cx="12" cy="12" r="10" /><path d="M12 11v6m0-10h.01" /></>,
   book: <><path d="M4 4h7a3 3 0 0 1 3 3v13a3 3 0 0 0-3-3H4V4Z" /><path d="M20 4h-3a3 3 0 0 0-3 3v13a3 3 0 0 1 3-3h3V4Z" /></>,
   plus: <path d="M12 5v14M5 12h14" />,
+  grid: <><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></>,
+  settings: <><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 1.55V21H9v-.05a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 3.6 15a1.7 1.7 0 0 0-1.55-1H2V9h.05A1.7 1.7 0 0 0 3.6 8a1.7 1.7 0 0 0-.34-1.87L3.2 6.07 6.03 3.24l.06.06A1.7 1.7 0 0 0 8 3.6a1.7 1.7 0 0 0 1-1.55V2h5v.05a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 20.4 8a1.7 1.7 0 0 0 1.55 1H22v5h-.05a1.7 1.7 0 0 0-1.55 1Z" /></>,
 };
 
 export function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
