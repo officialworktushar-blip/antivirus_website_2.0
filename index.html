@@ -8,10 +8,19 @@
     <title>SENTRIQ — Mobile Security, Made Clear</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" /></noscript>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="boot-fallback" role="status" aria-live="polite">
+        <div class="boot-fallback-card">
+          <strong class="boot-fallback-brand">SENTRIQ</strong>
+          <h1>Loading SENTRIQ</h1>
+          <p>If this message stays on screen, reload the page or check your connection.</p>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
